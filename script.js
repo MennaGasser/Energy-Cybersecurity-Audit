@@ -275,7 +275,7 @@ const auditItems = [
         justification: "Compromised encryption keys may allow unauthorized parties to access protected information."
     },
 
-    // 7. VENDOR & SUPPLY CHAIN RISK
+   
     {
         id: 25,
         domain: "Vendor & Supply Chain Risk",
@@ -321,7 +321,7 @@ const auditItems = [
         justification: "Supplier security can change over time, so an initial assessment alone may not be sufficient."
     },
 
-    // 8. PHYSICAL SECURITY
+   
     {
         id: 29,
         domain: "Physical Security",
@@ -368,7 +368,7 @@ const auditItems = [
     }
 ];
 
-// Load saved completion status
+
 const savedItems = JSON.parse(
     localStorage.getItem("completedAuditItems") || "[]"
 );
@@ -383,7 +383,7 @@ let hideCompleted = false;
 let selectedDomain = "All";
 let selectedRisk = "All";
 
-// Build dashboard
+
 const main = document.querySelector("main");
 
 main.innerHTML = `
@@ -440,12 +440,10 @@ main.innerHTML = `
     <div id="checklist"></div>
 `;
 
-// Select dashboard elements
 const domainFilter = document.getElementById("domain-filter");
 const riskFilter = document.getElementById("risk-filter");
 const checklist = document.getElementById("checklist");
 
-// Populate domain filter
 const domains = [...new Set(auditItems.map(item => item.domain))];
 
 domains.forEach(domain => {
@@ -455,7 +453,7 @@ domains.forEach(domain => {
     domainFilter.appendChild(option);
 });
 
-// Update dashboard statistics
+
 function updateDashboard() {
     const total = auditItems.length;
 
@@ -486,7 +484,7 @@ function updateDashboard() {
         percentage + "% completed";
 }
 
-// Display checklist items
+
 function renderChecklist() {
     checklist.innerHTML = "";
 
@@ -567,7 +565,7 @@ function renderChecklist() {
     updateDashboard();
 }
 
-// Handle completion checkbox changes
+
 checklist.addEventListener("change", event => {
     if (!event.target.classList.contains("completion-checkbox")) {
         return;
@@ -589,19 +587,18 @@ checklist.addEventListener("change", event => {
     renderChecklist();
 });
 
-// Handle domain filtering
+
 domainFilter.addEventListener("change", event => {
     selectedDomain = event.target.value;
     renderChecklist();
 });
 
-// Handle risk filtering
+
 riskFilter.addEventListener("change", event => {
     selectedRisk = event.target.value;
     renderChecklist();
 });
 
-// Hide or show completed items
 document.getElementById("hide-button").addEventListener("click", () => {
     hideCompleted = !hideCompleted;
 
