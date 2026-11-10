@@ -1,5 +1,5 @@
 const auditItems = [
-    // 1. ACCESS CONTROL & IDENTITY MANAGEMENT
+   
     {
         id: 1,
         domain: "Access Control & Identity Management",
@@ -45,7 +45,7 @@ const auditItems = [
         justification: "Former employees or users with outdated permissions may retain unauthorized access to company systems."
     },
 
-    // 2. NETWORK & INFRASTRUCTURE SECURITY
+  
     {
         id: 5,
         domain: "Network & Infrastructure Security",
@@ -91,8 +91,7 @@ const auditItems = [
         justification: "Unsecured wireless connections can provide an entry point into internal networks."
     },
 
-    // 3. INDUSTRIAL CONTROL SYSTEM (ICS) / OT SECURITY
-    {
+        {
         id: 9,
         domain: "ICS / OT Security",
         title: "Industrial System Access Authorization",
@@ -137,7 +136,7 @@ const auditItems = [
         justification: "Weak zone boundaries can allow threats to move between industrial systems and affect critical operations."
     },
 
-    // 4. ASSET & VULNERABILITY MANAGEMENT
+    
     {
         id: 13,
         domain: "Asset & Vulnerability Management",
@@ -183,7 +182,7 @@ const auditItems = [
         justification: "Incorrect configurations can create weaknesses that attackers may exploit."
     },
 
-    // 5. INCIDENT RESPONSE & BUSINESS CONTINUITY
+   
     {
         id: 17,
         domain: "Incident Response & Business Continuity",
@@ -229,7 +228,7 @@ const auditItems = [
         justification: "Failure to prepare critical technology systems for disruption can affect electricity services and business operations."
     },
 
-    // 6. DATA PROTECTION & ENCRYPTION
+   
     {
         id: 21,
         domain: "Data Protection & Encryption",
@@ -608,5 +607,5 @@ document.getElementById("hide-button").addEventListener("click", () => {
     renderChecklist();
 });
 
-// Initial dashboard display
+
 renderChecklist();
