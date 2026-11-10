@@ -1,1 +1,163 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
+body {
+    font-family: Arial, sans-serif;
+    background: #f3f6fa;
+    color: #1e293b;
+}
+
+header {
+    background: #102a43;
+    color: white;
+    padding: 35px 20px;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+header p {
+    color: #cbd5e1;
+}
+
+main {
+    max-width: 1100px;
+    margin: 35px auto;
+    padding: 20px;
+}
+
+h2 {
+    margin-bottom: 15px;
+    color: #102a43;
+}
+
+.dashboard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 18px;
+    margin: 25px 0;
+}
+
+.stat-card {
+    background: white;
+    padding: 22px;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+}
+
+.stat-card h3 {
+    font-size: 14px;
+    color: #64748b;
+    margin-bottom: 12px;
+}
+
+.stat-card p {
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.filters {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin: 25px 0;
+}
+
+select, button {
+    padding: 11px 15px;
+    border: 1px solid #cbd5e1;
+    border-radius: 7px;
+    cursor: pointer;
+    background: white;
+}
+
+button {
+    background: #176b87;
+    color: white;
+    border: none;
+}
+
+button:hover {
+    background: #12536a;
+}
+
+.audit-item {
+    background: white;
+    padding: 22px;
+    margin-bottom: 16px;
+    border-radius: 10px;
+    border-left: 5px solid #176b87;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.audit-item h3 {
+    margin: 12px 0;
+}
+
+.audit-item p {
+    margin: 9px 0;
+    line-height: 1.5;
+}
+
+.audit-item label {
+    display: block;
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+.risk-high {
+    color: #dc2626;
+    font-weight: bold;
+}
+
+.risk-medium {
+    color: #d97706;
+    font-weight: bold;
+}
+
+.risk-low {
+    color: #15803d;
+    font-weight: bold;
+}
+
+.completed {
+    opacity: 0.65;
+    border-left-color: #16a34a;
+}
+
+.progress-container {
+    background: #dbe4ee;
+    height: 12px;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-top: 12px;
+}
+
+#progress-bar {
+    background: #16a34a;
+    height: 100%;
+    width: 0%;
+    transition: width 0.3s;
+}
+
+footer {
+    text-align: center;
+    padding: 25px;
+    color: #64748b;
+}
+
+@media (max-width: 600px) {
+    header h1 {
+        font-size: 23px;
+    }
+
+    main {
+        padding: 14px;
+    }
+}
