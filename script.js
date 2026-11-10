@@ -108,14 +108,17 @@ main.innerHTML = `
             <h3>Total Controls</h3>
             <p id="total-count">0</p>
         </div>
+
         <div class="stat-card">
             <h3>Completed</h3>
             <p id="completed-count">0</p>
         </div>
+
         <div class="stat-card">
             <h3>Outstanding</h3>
             <p id="outstanding-count">0</p>
         </div>
+
         <div class="stat-card">
             <h3>High-Risk Gaps</h3>
             <p id="high-risk-count">0</p>
@@ -123,9 +126,11 @@ main.innerHTML = `
     </section>
 
     <h3>Overall Progress</h3>
+
     <div class="progress-container">
         <div id="progress-bar"></div>
     </div>
+
     <p id="progress-text">0% completed</p>
 
     <section class="filters">
@@ -144,8 +149,11 @@ main.innerHTML = `
     </section>
 
     <h2>Audit Checklist</h2>
+
     <div id="checklist"></div>
+
     <h2>Outstanding Action Items</h2>
+
     <div id="outstanding-list"></div>
 `;
 
@@ -165,10 +173,15 @@ domains.forEach(domain => {
 
 function updateDashboard() {
     const total = auditItems.length;
-    const completed = completedItems.size;
+    const completed = auditItems.filter(
+        item => completedItems.has(item.id)
+    ).length;
+
     const outstanding = total - completed;
+
     const highRisk = auditItems.filter(
-        item => item.risk === "High" && !completedItems.has(item.id)
+        item => item.risk === "High" &&
+        !completedItems.has(item.id)
     ).length;
 
     document.getElementById("total-count").textContent = total;
@@ -176,55 +189,88 @@ function updateDashboard() {
     document.getElementById("outstanding-count").textContent = outstanding;
     document.getElementById("high-risk-count").textContent = highRisk;
 
-    const percentage = total === 0 ? 0 : Math.round((completed / total) * 100);
+    const percentage = total === 0
+        ? 0
+        : Math.round((completed / total) * 100);
 
-    document.getElementById("progress-bar").style.width = percentage + "%";
+    document.getElementById("progress-bar").style.width =
+        percentage + "%";
+
     document.getElementById("progress-text").textContent =
         percentage + "% completed";
 }
+
 
 function renderChecklist() {
     checklist.innerHTML = "";
 
     const filteredItems = auditItems.filter(item => {
         const domainMatch =
-            selectedDomain === "All" || item.domain === selectedDomain;
+            selectedDomain === "All" ||
+            item.domain === selectedDomain;
 
         const riskMatch =
-            selectedRisk === "All" || item.risk === selectedRisk;
+            selectedRisk === "All" ||
+            item.risk === selectedRisk;
 
         const visibilityMatch =
-            !hideCompleted || !completedItems.has(item.id);
+            !hideCompleted ||
+            !completedItems.has(item.id);
 
         return domainMatch && riskMatch && visibilityMatch;
     });
 
     if (filteredItems.length === 0) {
-        checklist.textContent = "No checklist items match these filters.";
+        checklist.textContent =
+            "No checklist items match these filters.";
     }
 
     filteredItems.forEach(item => {
         const isCompleted = completedItems.has(item.id);
 
         const card = document.createElement("article");
-        card.className = "audit-item" + (isCompleted ? " completed" : "");
+
+        card.className =
+            "audit-item" + (isCompleted ? " completed" : "");
 
         card.innerHTML = `
             <small>${item.domain}</small>
+
             <h3>${item.id}. ${item.title}</h3>
-            <p><strong>Standard & Control:</strong> ${item.standard}</p>
-            <p><strong>Audit Question:</strong> ${item.question}</p>
-            <p><strong>Associated Action Items:</strong> ${item.actions}</p>
-            <p><strong>Risk / Severity:</strong>
-                <span class="risk-${item.risk.toLowerCase()}">${item.risk}</span>
+
+            <p><strong>Standard & Control:</strong>
+                ${item.standard}
             </p>
-            <p><strong>Urgency:</strong> ${item.urgency}</p>
-            <p><strong>Justification:</strong> ${item.justification}</p>
+
+            <p><strong>Audit Question:</strong>
+                ${item.question}
+            </p>
+
+            <p><strong>Associated Action Items:</strong>
+                ${item.actions}
+            </p>
+
+            <p><strong>Risk / Severity:</strong>
+                <span class="risk-${item.risk.toLowerCase()}">
+                    ${item.risk}
+                </span>
+            </p>
+
+            <p><strong>Urgency:</strong>
+                ${item.urgency}
+            </p>
+
+            <p><strong>Justification:</strong>
+                ${item.justification}
+            </p>
+
             <label>
-                <input type="checkbox"
+                <input
+                    type="checkbox"
                     class="completion-checkbox"
                     data-id="${item.id}"
-                    ${isCompleted ? "checked" : ""}>
+                    ${isCompleted ? "checked" : ""}
+                >
                 Mark as completed
             </label>
         `;
@@ -236,31 +282,40 @@ function renderChecklist() {
     renderOutstanding();
 }
 
+
 function renderOutstanding() {
     outstandingList.innerHTML = "";
 
+    const priority = {
+        High: 1,
+        Medium: 2,
+        Low: 3
+    };
+
     const outstanding = auditItems
         .filter(item => !completedItems.has(item.id))
-        .sort((a, b) => {
-            const priority = { High: 1, Medium: 2, Low: 3 };
-            return priority[a.risk] - priority[b.risk];
-        });
+        .sort((a, b) => priority[a.risk] - priority[b.risk]);
 
     if (outstanding.length === 0) {
-        outstandingList.textContent = "All audit items are completed!";
+        outstandingList.textContent =
+            "All audit items are completed!";
         return;
     }
 
     outstanding.forEach(item => {
         const row = document.createElement("p");
+
         row.textContent =
-            ${item.risk} | ${item.urgency} | ${item.title};
+            `${item.risk} | ${item.urgency} | ${item.title}`;
+
         outstandingList.appendChild(row);
     });
 }
 
 checklist.addEventListener("change", event => {
-    if (!event.target.classList.contains("completion-checkbox")) return;
+    if (!event.target.classList.contains("completion-checkbox")) {
+        return;
+    }
 
     const id = Number(event.target.dataset.id);
 
@@ -278,21 +333,24 @@ checklist.addEventListener("change", event => {
     renderChecklist();
 });
 
+// Handle domain filtering
 domainFilter.addEventListener("change", event => {
     selectedDomain = event.target.value;
     renderChecklist();
 });
 
+// Handle risk filtering
 riskFilter.addEventListener("change", event => {
     selectedRisk = event.target.value;
     renderChecklist();
 });
 
+// Hide or show completed items
 document.getElementById("hide-button").addEventListener("click", () => {
     hideCompleted = !hideCompleted;
 
     document.getElementById("hide-button").textContent =
-        Hide Completed: ${hideCompleted ? "ON" : "OFF"};
+        `Hide Completed: ${hideCompleted ? "ON" : "OFF"}`;
 
     renderChecklist();
 });
